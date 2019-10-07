@@ -19,6 +19,19 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -35,6 +48,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>openapi-generator-maven-plugin</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -43,6 +69,64 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>4.1.2</version>
+				<executions>
+					<execution>
+						<id>generate-swagger-spring-mvc</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+							<modelPackage>com.example.model</modelPackage>
+							<apiPackage>com.practice.service</apiPackage>
+							<generatorName>spring</generatorName>
+							<library>spring-mvc</library>
+							<invokerPackage>com.practice.api.common</invokerPackage>
+<!--							<templateDirectory>${project.basedir}/src/main/templates/JavaSpring</templateDirectory>-->
+							<output>${project.build.directory}/generated-sources/swagger</output>
+							<configOptions>
+								<sourceFolder>src/main/java</sourceFolder>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>${project.artifactId}</artifactId>
+								<version>${project.version}</version>
+								<rootArtifactId>springbootApplication</rootArtifactId>
+								<dateLibrary>java8</dateLibrary>
+								<java8>true</java8>
+							</configOptions>
+							<addCompileSourceRoot>false</addCompileSourceRoot>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- helper for generated sources -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build-helper-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/swagger/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

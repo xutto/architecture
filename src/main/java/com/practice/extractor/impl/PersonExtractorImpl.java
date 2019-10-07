@@ -2,10 +2,9 @@ package com.practice.extractor.impl;
 
 import com.practice.extractor.ModelExtractor;
 import com.practice.model.PersonModel;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PersonExtractorImpl implements ModelExtractor<PersonModel, String> {
