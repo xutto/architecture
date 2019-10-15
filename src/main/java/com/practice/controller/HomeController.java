@@ -1,5 +1,6 @@
 package com.practice.controller;
 
+import com.practice.annotation.Logeable;
 import com.practice.extractor.ModelExtractor;
 import com.practice.model.AnimalModel;
 import com.practice.model.PersonModel;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+//@Logeable
 public class HomeController {
 
     private final ModelExtractor animalExtractor;
