@@ -1,0 +1,22 @@
+
+
+
+
+
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: local
+
+pruebas:
+  propiedad01: "localProperty"
+
+---
+spring:
+  profiles: dev
+
+pruebas:
+  propiedad01: "devProperty"

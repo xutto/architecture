@@ -1,6 +1,6 @@
 package com.practice.controller;
 
-import com.practice.annotation.Logeable;
+import com.practice.config.PropertiesConfig;
 import com.practice.extractor.ModelExtractor;
 import com.practice.model.AnimalModel;
 import com.practice.model.PersonModel;
@@ -19,19 +19,23 @@ public class HomeController {
 
     private final ModelExtractor animalExtractor;
     private final ModelExtractor personExtractor;
+    private final PropertiesConfig propertiesConfig;
 
     @Autowired
     public HomeController(
-            @Qualifier("animalExtractor") ModelExtractor animalExtractor,
-            @Qualifier("personExtractorImpl") ModelExtractor personExtractor) {
+        @Qualifier("animalExtractor") ModelExtractor animalExtractor,
+        @Qualifier("personExtractorImpl") ModelExtractor personExtractor, final PropertiesConfig propertiesConfig) {
         this.animalExtractor = animalExtractor;
         this.personExtractor = personExtractor;
+        this.propertiesConfig = propertiesConfig;
     }
 
 
     @GetMapping(path = "/", headers = "Accept=application/json", produces = {"application/json"})
     @ResponseBody
     public List<PersonModel> homePage(final HttpServletRequest request) {
+
+        final String propiedad01 = propertiesConfig.getPropiedad01();
 
         final ArrayList<PersonModel> listResult = new ArrayList<>();
 
@@ -49,7 +53,7 @@ public class HomeController {
         final List<String> personExtraction = personExtractor.extraction(personModel);
 
         final PersonModel person1 = new PersonModel.Builder()
-                .withName(personModel.getName())
+                .withName(propiedad01)
                 .withCustomNick(personModel.getCustomNick())
                 .withSurName(personModel.getSurName())
                 .withProperties(animalExtraction)
